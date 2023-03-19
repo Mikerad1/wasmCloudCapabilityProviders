@@ -1,6 +1,6 @@
 # jwt_handler-provider Makefile
 
-CAPABILITY_ID = "wasmcloud:example:jwt_handler_provider"
+CAPABILITY_ID = "michaelrademeyer:jwt_handler_provider"
 NAME = "jwt_handler-provider"
 VENDOR = "MichaelRademeyer"
 PROJECT = jwt_handler_provider
