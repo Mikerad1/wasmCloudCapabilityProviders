@@ -25,6 +25,7 @@ jobs:
           working-directory: interfaces/jwt-provider/rust
   # Using a matrix, build for 6 supported targets for wasmCloud providers
   build_provider_targets:
+    needs: [interface_build_check]
     strategy:
       matrix:
         target:
