@@ -15,6 +15,14 @@ env:
   WASH_SUBJECT_KEY: ${{ secrets.WASH_SUBJECT_KEY_JWT_PROVIDER_HANDLER }}
   WASMCLOUD_PAT: ${{ secrets.WASMCLOUD_PAT }}
 jobs:
+  interface_build_check:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - id: rust-check-action
+        uses: wasmcloud/common-actions/rust-check@main
+        with:
+          working-directory: interfaces/jwt-provider/rust
   # Using a matrix, build for 6 supported targets for wasmCloud providers
   build_provider_targets:
     strategy:
