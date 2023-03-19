@@ -3,14 +3,14 @@ on:
   pull_request:
     branches: [master]
     paths:
-      - "providers/jwt-provider-handler/src/**"
-      - "providers/jwt-provider-handler/Cargo.*"
+      - "providers/jwt-handler-provider/src/**"
+      - "providers/jwt-handler-provider/Cargo.*"
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: providers/jwt-provider-handler
+        working-directory: providers/jwt-handler-provider
     steps:
       - uses: actions/checkout@v2
       - name: Check formatting
