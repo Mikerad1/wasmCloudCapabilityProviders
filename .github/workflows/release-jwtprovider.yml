@@ -2,7 +2,7 @@ name: Release
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [master]
     paths:
       - "providers/jwt-provider-handler/**"
       - "providers/jwt-provider-handler/src/**"
@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: providers/jwt-provider-handler
+        working-directory: ./providers/jwt-provider-handler
     steps:
       - uses: actions/checkout@v2
       - uses: wasmcloud/common-actions/install-cross@main
@@ -45,8 +45,8 @@ jobs:
           name: ${{ matrix.target }}
           if-no-files-found: error
           path: |
-            providers/jwt-provider-handler/target/${{ matrix.target }}/release/${{ env.artifact-name }}
-            providers/jwt-provider-handler/target/${{ matrix.target }}/release/${{ env.artifact-name }}.exe
+            ./providers/jwt-provider-handler/target/${{ matrix.target }}/release/${{ env.artifact-name }}
+            ./providers/jwt-provider-handler/target/${{ matrix.target }}/release/${{ env.artifact-name }}.exe
 
   assemble_provider_archive:
     needs: [build_provider_targets]
@@ -99,7 +99,7 @@ jobs:
           echo "\`\`\`" >> release.txt
           echo "$claims" >> release.txt
           echo "\`\`\`" >> release.txt
-        working-directory: providers/jwt-provider-handler
+        working-directory: ./providers/jwt-provider-handler
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
@@ -124,12 +124,12 @@ jobs:
       - name: Determine provider name
         run: |
           echo "provider-name=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[].name')" >> $GITHUB_ENV
-        working-directory: providers/jwt-provider-handler
+        working-directory: ./providers/jwt-provider-handler
       - name: Determine provider version
         if: startswith(github.ref, 'refs/tags/') # Only run on tag push
         run: |
           echo "provider-version=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[].version')" >> $GITHUB_ENV
-        working-directory: providers/jwt-provider-handler
+        working-directory: ./providers/jwt-provider-handler
       - name: Determine provider version (main)
         if: ${{ !startswith(github.ref, 'refs/tags/') }}
         run: |
