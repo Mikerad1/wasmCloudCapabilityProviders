@@ -40,6 +40,8 @@ jobs:
       run:
         working-directory: providers/jwt-handler-provider
     steps:
+      - name: Clean Cargo
+        run: cargo clean
       - uses: actions/checkout@v2
       - uses: wasmcloud/common-actions/install-cross@main
       - name: Determine artifact name
