@@ -1,6 +1,6 @@
 [package]
 name = "jwt_handler-provider"
-version = "0.1.0"
+version = "1.0.0"
 edition = "2021"
 resolver = "2"
 
@@ -8,7 +8,7 @@ resolver = "2"
 async-trait = "0.1"
 wasmbus-rpc = "0.11"
 wasmcloud-interface-httpserver = "0.8"
-jwt_provider = { path = "interface/jwt-provider/rust" }
+jwt_provider = "1.0.15"
 jwt = "0.16.0"
 hmac = "0.12.1"
 sha2 = "0.10.6"

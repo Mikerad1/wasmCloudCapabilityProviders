@@ -1,6 +1,3 @@
-[build.env]
-volumes = ["interfaces"]
-
 [target.armv7-unknown-linux-gnueabihf]
 image = "wasmcloud/cross:armv7-unknown-linux-gnueabihf"
 

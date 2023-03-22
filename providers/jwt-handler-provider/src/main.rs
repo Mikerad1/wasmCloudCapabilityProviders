@@ -94,7 +94,8 @@ impl JwtHandler for JwtHandlerProviderProvider {
         Ok(true)
     }
 
-    async fn get_jwt_values<TS: ToString + ?Sized + Sync>(&self, _ctx: &Context, arg: &TS) -> RpcResult<HashMap<String, String>> {
+    async fn get_jwt_values<TS: ToString + ?Sized + Sync>(&self, _ctx: &Context, arg: &TS) -> RpcResult<HashMap<String, String>> 
+    {
         let read_secert = self.secret.read().await;
         let key: Hmac<Sha256> = Hmac::new_from_slice(read_secert.as_bytes()).unwrap();
         let token_str = arg.to_string();
@@ -105,4 +106,20 @@ impl JwtHandler for JwtHandlerProviderProvider {
         Ok(claims.into_iter().collect())
     }
     
+    async fn is_token_expired<TS: ToString + ?Sized + Sync>(&self, _ctx: &Context, arg: &TS) -> RpcResult<bool> 
+    {
+        let read_secert = self.secret.read().await;
+        let key: Hmac<Sha256> = Hmac::new_from_slice(read_secert.as_bytes()).unwrap();
+        let token_str = arg.to_string();
+        let claims: BTreeMap<String, String> = token_str.verify_with_key(&key).unwrap_or_default();
+        if claims.is_empty() {
+            return Ok(false);
+        }
+        let exp = claims.get("exp").unwrap().parse::<i64>().unwrap();
+        let now = Utc::now().timestamp();
+        if now > exp {
+            return Ok(false);
+        }
+        Ok(true)
+    }
 }

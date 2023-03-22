@@ -1,28 +1,12 @@
 name: Release
 on:
   workflow_dispatch:
-  push:
-    branches: [master]
-    paths:
-      - "providers/jwt-handler-provider/**"
-      - "providers/jwt-handler-provider/src/**"
-      - "providers/jwt-handler-provider/Cargo.*"
-    tags:
-      - "v*"
 env:
   # For the release action, you'll have to set the following variables
   WASH_ISSUER_KEY: ${{ secrets.WASH_ISSUER_KEY }}
   WASH_SUBJECT_KEY: ${{ secrets.WASH_SUBJECT_KEY_JWT_PROVIDER_HANDLER }}
   WASMCLOUD_PAT: ${{ secrets.WASMCLOUD_PAT }}
 jobs:
-  interface_build_check:
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - id: rust-check-action
-        uses: wasmcloud/common-actions/rust-check@main
-        with:
-          working-directory: providers/jwt-handler-provider/interface/jwt-provider/rust
   # Using a matrix, build for 6 supported targets for wasmCloud providers
   build_provider_targets:
     needs: [interface_build_check]
@@ -145,6 +129,9 @@ jobs:
         if: ${{ !startswith(github.ref, 'refs/tags/') }}
         run: |
           echo "provider-version=latest" >> $GITHUB_ENV
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H-%M-%S')"
       - name: Push provider archive to GHCR
         env:
           WASH_REG_USER: ${{ github.repository_owner }}
