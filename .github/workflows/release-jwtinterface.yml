@@ -46,5 +46,6 @@ jobs:
           toolchain: stable
           override: true
       - run: cargo publish --token ${CRATES_TOKEN}
+        working-directory: ${{ env.working-directory }}
         env:
           CRATES_TOKEN: ${{ secrets.CRATES_PUBLISH_TOKEN }}
