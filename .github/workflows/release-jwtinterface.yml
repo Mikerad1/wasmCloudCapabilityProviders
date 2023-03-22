@@ -2,6 +2,12 @@ name: JWT Interface
 
 on:
   workflow_dispatch:
+  push:
+    branches: [ master ]
+    paths:
+    - "interfaces/jwt-provider/**"
+    tags:
+    - "v*"
 
 env:
   CARGO_TERM_COLOR: always
@@ -24,7 +30,7 @@ jobs:
     steps:
     - name: Create Release
       id: create_release
-      uses: actions/create-release@v1
+      uses: actions/create-release@v2
       env:
         GITHUB_TOKEN: ${{ secrets.WASMCLOUD_PAT }}
       with:
@@ -38,9 +44,13 @@ jobs:
     needs: github_release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - id: crates-release-action
-        uses: wasmcloud/common-actions/crates-release@main
+      - uses: actions/checkout@v2
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
         with:
-          working-directory: ${{ env.working-directory }}
-          crates-token: ${{ secrets.CRATES_PUBLISH_TOKEN }}
+          profile: minimal
+          toolchain: stable
+          override: true
+      - run: cargo publish --token ${CRATES_PUBLISH_TOKEN}
+        env:
+          CRATES_TOKEN: ${{ secrets.CRATES_PUBLISH_TOKEN }}
