@@ -18,7 +18,7 @@ use org.wasmcloud.model#U64
     providerReceive: true )
 service JwtHandler {
   version: "0.1",
-  operations: [ GenerateJwt, ValidateJwt, GetJwtValues, IsTokenExpired ]
+  operations: [ GenerateJwt, ValidateJwt, GetJwtValues ]
 }
 
 structure User {
@@ -53,9 +53,4 @@ operation ValidateJwt {
 operation GetJwtValues {
     input: String
     output: ClaimMap
-}
-
-operation IsTokenExpired {
-    input: String
-    output: Boolean
 }
