@@ -5,13 +5,13 @@ on:
   push:
     branches: [ master ]
     paths:
-    - "interfaces/jwtprovider/**"
+    - "interfaces/jwt-provider/**"
     tags:
     - "v*"
 
 env:
   CARGO_TERM_COLOR: always
-  working-directory: interfaces/jwtprovider/rust
+  working-directory: interfaces/jwt-provider/rust
 
 jobs:
   rust_check:
