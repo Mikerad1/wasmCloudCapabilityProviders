@@ -1,4 +1,4 @@
-name: Release
+name: JWT Handler Provider Release
 on:
   workflow_dispatch:
 env:
@@ -9,7 +9,6 @@ env:
 jobs:
   # Using a matrix, build for 6 supported targets for wasmCloud providers
   build_provider_targets:
-    needs: [interface_build_check]
     strategy:
       matrix:
         target:
