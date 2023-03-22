@@ -11,7 +11,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  working-directory: ./interfaces/jwtprovider/rust
+  working-directory: interfaces/jwtprovider/rust
 
 jobs:
   rust_check:
