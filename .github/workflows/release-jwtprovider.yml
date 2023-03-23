@@ -48,8 +48,6 @@ jobs:
       - uses: wasmcloud/common-actions/install-wash@main
       # Downloads all provider artifacts
       - uses: actions/download-artifact@v3
-      - name: Test
-        run: ls
       - name: Determine artifact name
         run: |
           echo "artifact-name=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[0].targets[0].name')" >> $GITHUB_ENV
@@ -60,13 +58,8 @@ jobs:
           mv x86_64-unknown-linux-gnu/${{ env.artifact-name }} target/release/
           cd providers/jwt-handler-provider
           make par
-      - name: Test 2
-        run: ls
       - name: Fill provider archive with binaries
         run: |
-          ls
-          ls ../../
-          ls build
           wash par insert --arch x86_64-macos   --binary ../../x86_64-apple-darwin/${{ env.artifact-name }} build/${{ env.artifact-name }}.par.gz
           wash par insert --arch aarch64-linux  --binary ../../aarch64-unknown-linux-gnu/${{ env.artifact-name }} build/${{ env.artifact-name }}.par.gz
           wash par insert --arch aarch64-macos  --binary ../../aarch64-apple-darwin/${{ env.artifact-name }} build/${{ env.artifact-name }}.par.gz
@@ -109,7 +102,7 @@ jobs:
         with:
           files: build/*.par.gz
           token: ${{ env.WASMCLOUD_PAT }}
-          body_path: release.txt
+          body_path: providers/jwt-handler-provider/release.txt
           prerelease: false
           draft: false
 
@@ -144,6 +137,8 @@ jobs:
       - name: Get current date
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H-%M-%S')"
+      - name: Test
+        run: ls
       - name: Push provider archive to GHCR
         env:
           WASH_REG_USER: ${{ github.repository_owner }}
