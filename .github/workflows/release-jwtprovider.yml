@@ -64,16 +64,17 @@ jobs:
         run: ls
       - name: Fill provider archive with binaries
         run: |
-          wash par insert --arch x86_64-macos   --binary x86_64-apple-darwin/${{ env.artifact-name }} build/${{ env.artifact-name }}.par.gz
-          wash par insert --arch aarch64-linux  --binary aarch64-unknown-linux-gnu/${{ env.artifact-name }} build/${{ env.artifact-name }}.par.gz
-          wash par insert --arch aarch64-macos  --binary aarch64-apple-darwin/${{ env.artifact-name }} build/${{ env.artifact-name }}.par.gz
-          wash par insert --arch armv7-linux    --binary armv7-unknown-linux-gnueabihf/${{ env.artifact-name }} build/${{ env.artifact-name }}.par.gz
-          wash par insert --arch x86_64-windows --binary x86_64-pc-windows-gnu/${{ env.artifact-name }}.exe build/${{ env.artifact-name }}.par.gz
+          wash par insert --arch x86_64-macos   --binary ../../x86_64-apple-darwin/${{ env.artifact-name }} build/${{ env.artifact-name }}.par.gz
+          wash par insert --arch aarch64-linux  --binary ../../aarch64-unknown-linux-gnu/${{ env.artifact-name }} build/${{ env.artifact-name }}.par.gz
+          wash par insert --arch aarch64-macos  --binary ../../aarch64-apple-darwin/${{ env.artifact-name }} build/${{ env.artifact-name }}.par.gz
+          wash par insert --arch armv7-linux    --binary ../../armv7-unknown-linux-gnueabihf/${{ env.artifact-name }} build/${{ env.artifact-name }}.par.gz
+          wash par insert --arch x86_64-windows --binary ../../x86_64-pc-windows-gnu/${{ env.artifact-name }}.exe build/${{ env.artifact-name }}.par.gz
+        working-directory: providers/jwt-handler-provider
       - name: Upload provider archive to GH Actions
         uses: actions/upload-artifact@v2
         with:
           name: provider-archive
-          path: build/${{ env.artifact-name }}.par.gz
+          path: providers/jwt-handler-provider/build/${{ env.artifact-name }}.par.gz
 
   github_release:
     if: startswith(github.ref, 'refs/tags/') # Only run on tag push
