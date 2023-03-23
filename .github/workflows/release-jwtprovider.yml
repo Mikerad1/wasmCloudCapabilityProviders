@@ -131,16 +131,9 @@ jobs:
         if: ${{ !startswith(github.ref, 'refs/tags/') }}
         run: |
           echo "provider-version=latest" >> $GITHUB_ENV
-      - name: Get current date
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H-%M-%S')"
-      - name: Test
-        run: ls build
-      - name: Test2
-        run: echo ${{ env.provider-name }}
       - name: Push provider archive to GHCR
         env:
           WASH_REG_USER: ${{ github.repository_owner }}
           WASH_REG_PASSWORD: ${{ secrets.WASMCLOUD_PAT }}
         run: |
-          wash reg push ghcr.io/jwt-provider-handler:${{ env.provider-version }} build/${{ env.provider-name }}.par.gz -a org.opencontainers.image.source=https://github.com/${{ github.REPOSITORY }} --allow-latest
+          wash reg push ghcr.io/${{ github.REPOSITORY }}-${{ env.provider-name }}:${{ env.provider-version }} build/${{ env.provider-name }}.par.gz -a org.opencontainers.image.source=https://github.com/${{ github.REPOSITORY }} --allow-latest
