@@ -135,7 +135,9 @@ jobs:
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H-%M-%S')"
       - name: Test
-        run: ls
+        run: ls build
+      - name: Test2
+        run: echo ${{ env.provider-name }}
       - name: Push provider archive to GHCR
         env:
           WASH_REG_USER: ${{ github.repository_owner }}
