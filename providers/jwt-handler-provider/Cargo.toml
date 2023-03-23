@@ -1,6 +1,6 @@
 [package]
-name = "jwt_handler-provider"
-version = "2.0.18"
+name = "jwt_handler_provider"
+version = "2.0.19"
 edition = "2021"
 resolver = "2"
 
