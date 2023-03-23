@@ -1,6 +1,6 @@
 [package]
 name = "jwt_handler-provider"
-version = "2.0.10"
+version = "2.0.14"
 edition = "2021"
 resolver = "2"
 
@@ -21,5 +21,5 @@ wasmcloud-test-util = "0.6"
 tokio = { version = "1", features = [ "full" ] }
 
 [[bin]]
-name = "jwt-handler-provider"
+name = "jwt_handler_provider"
 path = "src/main.rs"
