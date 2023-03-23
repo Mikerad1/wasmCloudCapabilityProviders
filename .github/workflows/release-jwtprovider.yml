@@ -43,9 +43,7 @@ jobs:
   assemble_provider_archive:
     needs: [build_provider_targets]
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: providers/jwt-handler-provider
+        
     steps:
       - uses: actions/checkout@v2
       - uses: wasmcloud/common-actions/install-wash@main
