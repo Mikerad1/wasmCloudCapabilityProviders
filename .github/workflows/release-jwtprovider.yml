@@ -66,6 +66,7 @@ jobs:
         run: |
           ls
           ls ../../
+          ls build
           wash par insert --arch x86_64-macos   --binary ../../x86_64-apple-darwin/${{ env.artifact-name }} build/${{ env.artifact-name }}.par.gz
           wash par insert --arch aarch64-linux  --binary ../../aarch64-unknown-linux-gnu/${{ env.artifact-name }} build/${{ env.artifact-name }}.par.gz
           wash par insert --arch aarch64-macos  --binary ../../aarch64-apple-darwin/${{ env.artifact-name }} build/${{ env.artifact-name }}.par.gz
