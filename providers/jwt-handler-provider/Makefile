@@ -1,7 +1,7 @@
 # jwt_handler-provider Makefile
 
 CAPABILITY_ID = "michaelrademeyer:jwt_handler_provider"
-NAME = "jwt_handler-provider"
+NAME = "jwt_handler_provider"
 VENDOR = "MichaelRademeyer"
 PROJECT = jwt_handler_provider
 VERSION = 0.1.0
