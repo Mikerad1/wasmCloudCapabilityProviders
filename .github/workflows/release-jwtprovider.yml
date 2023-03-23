@@ -48,6 +48,8 @@ jobs:
       - uses: wasmcloud/common-actions/install-wash@main
       # Downloads all provider artifacts
       - uses: actions/download-artifact@v3
+      - name: Test
+        run: ls
       - name: Determine artifact name
         run: |
           echo "artifact-name=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[0].targets[0].name')" >> $GITHUB_ENV
@@ -58,6 +60,8 @@ jobs:
           mv x86_64-unknown-linux-gnu/${{ env.artifact-name }} target/release/
           make par
         working-directory: providers/jwt-handler-provider
+      - name: Test 2
+        run: ls
       - name: Fill provider archive with binaries
         run: |
           wash par insert --arch x86_64-macos   --binary x86_64-apple-darwin/${{ env.artifact-name }} build/${{ env.artifact-name }}.par.gz
